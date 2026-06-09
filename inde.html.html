@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beta Ji — Baggage Seva</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --saffron:#F4913A; --saffron-light:#FDF0E3; --saffron-mid:#F9C98A;
+  --warm-brown:#7A3F0F; --deep-brown:#3D1F07; --cream:#FFF8F0;
+  --warm-gray:#7A6E66; --soft-green:#4A7C59; --bg:#FFF8F0;
+}
+body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--deep-brown); overflow-x:hidden; }
+.serif { font-family:'Playfair Display',serif; }
+.page { display:none; }
+.page.active { display:block; }
+.hindi { display:none; }
+.lang-hi .hindi { display:inline; }
+.lang-hi .english { display:none; }
+
+nav { display:flex; align-items:center; justify-content:space-between; padding:0.9rem 2rem; background:var(--cream); border-bottom:1px solid rgba(244,145,58,0.15); position:sticky; top:0; z-index:200; }
+.logo { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--saffron); cursor:pointer; flex-shrink:0; }
+.logo span { color:var(--warm-brown); font-weight:400; font-size:0.7rem; display:block; font-family:'DM Sans',sans-serif; letter-spacing:2px; margin-top:1px; }
+nav ul { list-style:none; display:flex; gap:1rem; align-items:center; }
+nav ul li a { text-decoration:none; color:var(--warm-brown); font-size:0.78rem; font-weight:500; cursor:pointer; padding:0.4rem 0.65rem; border-radius:8px; display:block; }
+nav ul li a:hover { color:var(--saffron); background:var(--saffron-light); }
+.nav-controls { display:flex; gap:0.8rem; align-items:center; flex-shrink:0; }
+.lang-toggle { background:var(--saffron-light); border:none; padding:0.4rem 0.8rem; border-radius:8px; font-size:0.75rem; font-weight:500; color:var(--saffron); cursor:pointer; }
+.lang-toggle:hover { background:var(--saffron); color:white; }
+.nav-cta { background:var(--saffron); color:white; border:none; padding:0.55rem 1.2rem; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; cursor:pointer; flex-shrink:0; white-space:nowrap; }
+.nav-cta:hover { background:var(--warm-brown); }
+.nav-hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; }
+.nav-hamburger span { width:22px; height:2px; background:var(--warm-brown); border-radius:2px; }
+.nav-drawer { display:none; flex-direction:column; background:var(--cream); border-bottom:2px solid rgba(244,145,58,0.15); padding:1rem 1.5rem 1.5rem; gap:0.3rem; }
+.nav-drawer.open { display:flex; }
+.nav-drawer a { color:var(--warm-brown); font-size:0.9rem; font-weight:500; padding:0.7rem 1rem; border-radius:10px; cursor:pointer; text-decoration:none; display:flex; gap:0.7rem; }
+.nav-drawer a:hover { background:var(--saffron-light); color:var(--saffron); }
+.nav-drawer .divider { height:1px; background:rgba(244,145,58,0.15); margin:0.5rem 0; }
+
+.section { padding:5rem 3rem; }
+.section-label { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; color:var(--saffron); font-weight:500; margin-bottom:0.8rem; }
+.section-heading { font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--deep-brown); margin-bottom:1rem; line-height:1.2; }
+.section-sub { color:var(--warm-gray); font-size:1rem; line-height:1.7; max-width:560px; font-weight:300; margin-bottom:3rem; }
+.svc-hero { padding:5rem 3rem 4rem; position:relative; overflow:hidden; }
+.svc-hero::after { content:''; position:absolute; right:-80px; top:-80px; width:500px; height:500px; background:radial-gradient(circle,rgba(244,145,58,0.08) 0%,transparent 70%); pointer-events:none; }
+.svc-hero h1 { font-family:'Playfair Display',serif; font-size:3rem; line-height:1.15; color:var(--deep-brown); margin-bottom:1.2rem; }
+.svc-hero h1 em { font-style:italic; color:var(--saffron); }
+.svc-hero p { font-size:1.05rem; line-height:1.8; color:var(--warm-gray); font-weight:300; margin-bottom:2rem; }
+.back-btn { display:inline-flex; align-items:center; gap:0.4rem; color:var(--warm-gray); font-size:0.85rem; font-weight:500; cursor:pointer; margin-bottom:2rem; text-decoration:none; }
+.back-btn:hover { color:var(--saffron); }
+
+.hero { display:grid; grid-template-columns:1fr 1fr; min-height:88vh; align-items:center; padding:0 3rem; background:var(--cream); position:relative; overflow:hidden; }
+.hero::before { content:''; position:absolute; right:-100px; top:-100px; width:600px; height:600px; background:radial-gradient(circle,rgba(244,145,58,0.08) 0%,transparent 70%); pointer-events:none; }
+.hero-text { max-width:520px; }
+.hero-badge { display:inline-block; background:var(--saffron-light); color:var(--saffron); font-size:0.78rem; font-weight:500; letter-spacing:1.5px; padding:0.35rem 1rem; border-radius:50px; margin-bottom:1.5rem; text-transform:uppercase; }
+.hero h1 { font-family:'Playfair Display',serif; font-size:3.6rem; line-height:1.12; color:var(--deep-brown); margin-bottom:1.4rem; }
+.hero h1 em { font-style:italic; color:var(--saffron); }
+.hero > .hero-text > p { font-size:1.05rem; line-height:1.75; color:var(--warm-gray); margin-bottom:2.2rem; font-weight:300; }
+.hero-btns { display:flex; gap:1rem; align-items:center; }
+.btn-primary { background:var(--saffron); color:white; border:none; padding:0.85rem 2rem; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer; transition:all 0.2s; text-decoration:none; display:inline-block; }
+.btn-primary:hover { background:var(--warm-brown); transform:translateY(-1px); }
+.btn-secondary { color:var(--warm-brown); font-size:0.9rem; font-weight:500; cursor:pointer; display:flex; align-items:center; gap:0.4rem; }
+.btn-secondary:hover { color:var(--saffron); }
+.btn-secondary::after { content:'→'; }
+
+.hero-visual { display:flex; justify-content:center; align-items:center; }
+.hero-card-stack { position:relative; width:340px; height:380px; }
+.float-card { position:absolute; background:white; border-radius:20px; padding:1.2rem 1.5rem; box-shadow:0 8px 40px rgba(122,63,15,0.1); animation:floatAnim 4s ease-in-out infinite; }
+.float-card.card1 { top:0; left:0; width:220px; animation-delay:0s; }
+.float-card.card2 { top:100px; right:0; width:200px; animation-delay:1.5s; }
+.float-card.card3 { bottom:20px; left:30px; width:190px; animation-delay:0.8s; }
+@keyframes floatAnim { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.card-icon { font-size:2rem; margin-bottom:0.5rem; }
+.card-title { font-family:'Playfair Display',serif; font-size:0.9rem; font-weight:700; color:var(--deep-brown); margin-bottom:0.3rem; }
+.card-sub { font-size:0.75rem; color:var(--warm-gray); line-height:1.5; }
+.card-tag { display:inline-block; background:#E8F5E9; color:var(--soft-green); font-size:0.7rem; padding:0.2rem 0.6rem; border-radius:50px; font-weight:500; margin-top:0.5rem; }
+.card-tag.orange { background:var(--saffron-light); color:var(--saffron); }
+
+.trust-bar { background:var(--saffron); padding:1.2rem 3rem; display:flex; justify-content:center; align-items:center; gap:4rem; }
+.trust-item { text-align:center; color:white; }
+.trust-num { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; }
+.trust-label { font-size:0.78rem; opacity:0.85; }
+
+.steps { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; position:relative; }
+.steps::before { content:''; position:absolute; top:36px; left:60px; right:60px; height:2px; background:repeating-linear-gradient(90deg,var(--saffron-mid) 0,var(--saffron-mid) 8px,transparent 8px,transparent 16px); }
+.step { background:white; border-radius:18px; padding:1.8rem 1.5rem; position:relative; transition:transform 0.2s; border:1px solid rgba(244,145,58,0.1); }
+.step:hover { transform:translateY(-6px); box-shadow:0 16px 48px rgba(122,63,15,0.1); }
+.step-num { width:48px; height:48px; background:var(--saffron); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; margin-bottom:1.2rem; position:relative; z-index:1; }
+.step h3 { font-size:1rem; font-weight:500; color:var(--deep-brown); margin-bottom:0.6rem; }
+.step p { font-size:0.85rem; color:var(--warm-gray); line-height:1.65; font-weight:300; }
+
+.who-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+.who-card { border-radius:20px; overflow:hidden; transition:transform 0.2s; }
+.who-card:hover { transform:translateY(-4px); }
+.who-card-top { padding:2.5rem 2rem 1.5rem; }
+.who-card:nth-child(1) .who-card-top { background:#FDF0E3; }
+.who-card:nth-child(2) .who-card-top { background:#E8F5E9; }
+.who-card:nth-child(3) .who-card-top { background:#EAF2FB; }
+.who-emoji { font-size:3rem; margin-bottom:1rem; }
+.who-card h3 { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--deep-brown); margin-bottom:0.6rem; }
+.who-card-body { padding:1.2rem 2rem 2rem; background:white; border:1px solid rgba(0,0,0,0.05); border-top:none; border-radius:0 0 20px 20px; }
+.who-card p { font-size:0.875rem; color:var(--warm-gray); line-height:1.7; font-weight:300; }
+.who-card ul { list-style:none; margin-top:1rem; }
+.who-card ul li { font-size:0.82rem; color:var(--warm-brown); padding:0.3rem 0; display:flex; align-items:center; gap:0.5rem; }
+.who-card ul li::before { content:'✓'; color:var(--saffron); font-weight:700; }
+
+.testimonials { background:var(--deep-brown); padding:5rem 3rem; }
+.testimonials .section-heading { color:white; }
+.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem; }
+.testi-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:2rem; }
+.testi-stars { color:var(--saffron); font-size:1rem; margin-bottom:1rem; letter-spacing:2px; }
+.testi-text { font-size:0.9rem; color:rgba(255,255,255,0.8); line-height:1.75; font-weight:300; font-style:italic; margin-bottom:1.5rem; }
+.testi-author { display:flex; align-items:center; gap:0.8rem; }
+.testi-avatar { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:500; font-size:0.85rem; color:white; }
+.av1{background:var(--saffron);} .av2{background:var(--soft-green);} .av3{background:#5B8DB8;}
+.testi-name { font-weight:500; color:white; font-size:0.9rem; }
+.testi-role { font-size:0.75rem; color:rgba(255,255,255,0.5); }
+
+.booking-section { background:var(--cream); padding:5rem 3rem; }
+.booking-inner { background:white; border-radius:28px; padding:3.5rem; max-width:800px; margin:0 auto; border:1px solid rgba(244,145,58,0.15); }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+.form-group { display:flex; flex-direction:column; gap:0.4rem; }
+.form-group.full { grid-column:1/-1; }
+label { font-size:0.8rem; color:var(--warm-gray); font-weight:500; }
+input, select, textarea { padding:0.75rem 1rem; border:1px solid rgba(122,63,15,0.15); border-radius:12px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--deep-brown); background:var(--cream); outline:none; }
+input:focus, select:focus, textarea:focus { border-color:var(--saffron); background:white; }
+.submit-btn { width:100%; background:var(--saffron); color:white; border:none; padding:1rem; border-radius:50px; font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:500; cursor:pointer; margin-top:1.5rem; }
+.submit-btn:hover { background:var(--warm-brown); }
+
+.cta-band { background:var(--saffron-light); padding:4rem 3rem; text-align:center; }
+.cta-band h2 { font-family:'Playfair Display',serif; font-size:2rem; color:var(--deep-brown); margin-bottom:0.8rem; }
+.cta-band p { color:var(--warm-gray); font-weight:300; margin-bottom:2rem; }
+
+.faq-list { max-width:720px; }
+.faq-item { border-bottom:1px solid rgba(244,145,58,0.15); }
+.faq-q { width:100%; background:none; border:none; text-align:left; padding:1.3rem 0; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:500; color:var(--deep-brown); cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.faq-icon { color:var(--saffron); transition:transform 0.25s; }
+.faq-a { font-size:0.875rem; color:var(--warm-gray); line-height:1.75; font-weight:300; max-height:0; overflow:hidden; transition:max-height 0.35s; }
+.faq-item.open .faq-a { max-height:300px; padding-bottom:1.2rem; }
+.faq-item.open .faq-icon { transform:rotate(45deg); }
+
+.blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:2rem; }
+.blog-card { background:white; border-radius:18px; overflow:hidden; border:1px solid rgba(244,145,58,0.1); transition:transform 0.2s; }
+.blog-card:hover { transform:translateY(-4px); }
+.blog-card-img { width:100%; height:200px; background:linear-gradient(135deg,var(--saffron-light),var(--cream)); display:flex; align-items:center; justify-content:center; font-size:3rem; }
+.blog-card-body { padding:1.5rem; }
+.blog-card h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--deep-brown); margin-bottom:0.4rem; }
+.blog-card-meta { font-size:0.75rem; color:var(--warm-gray); margin-bottom:0.8rem; }
+.blog-card p { font-size:0.85rem; color:var(--warm-gray); line-height:1.6; font-weight:300; margin-bottom:1rem; }
+.blog-card a { color:var(--saffron); font-size:0.85rem; font-weight:500; text-decoration:none; cursor:pointer; }
+
+.allowance-table { width:100%; border-collapse:collapse; margin:2rem 0; }
+.allowance-table th { background:var(--saffron-light); padding:1rem; text-align:left; font-weight:500; color:var(--deep-brown); font-size:0.85rem; }
+.allowance-table td { padding:0.9rem 1rem; border-bottom:1px solid rgba(244,145,58,0.1); font-size:0.85rem; }
+.allowance-table tr:hover { background:var(--cream); }
+.save-badge { display:inline-block; background:var(--soft-green); color:white; padding:0.25rem 0.6rem; border-radius:4px; font-size:0.7rem; font-weight:500; }
+
+.video-box { position:relative; width:100%; padding-bottom:56.25%; margin:1.5rem 0; border-radius:16px; overflow:hidden; background:black; }
+.video-box iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
+
+.country-card { background:var(--saffron-light); border-radius:18px; padding:2rem; border:1px solid rgba(244,145,58,0.15); margin-bottom:1.5rem; }
+.country-card h3 { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--deep-brown); margin-bottom:1rem; }
+.country-card div { display:flex; justify-content:space-between; padding:0.5rem 0; font-size:0.85rem; border-bottom:1px solid rgba(244,145,58,0.1); }
+.country-card div:last-child { border-bottom:none; }
+
+footer { background:var(--deep-brown); color:white; padding:3rem; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; }
+.footer-brand p { font-size:0.85rem; color:rgba(255,255,255,0.5); line-height:1.7; font-weight:300; margin-top:1rem; }
+.footer-col h4 { font-size:0.8rem; text-transform:uppercase; letter-spacing:1.5px; color:var(--saffron-mid); margin-bottom:1rem; font-weight:500; }
+.footer-col a { display:block; color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.85rem; margin-bottom:0.5rem; cursor:pointer; }
+.footer-col a:hover { color:white; }
+.footer-bottom { background:var(--deep-brown); border-top:1px solid rgba(255,255,255,0.08); padding:1.2rem 3rem; text-align:center; font-size:0.8rem; color:rgba(255,255,255,0.35); }
+
+.whatsapp-btn { position:fixed; bottom:2rem; right:2rem; background:#25D366; color:white; border:none; border-radius:50px; padding:0.75rem 1.4rem; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:500; cursor:pointer; box-shadow:0 8px 30px rgba(37,211,102,0.4); display:flex; align-items:center; gap:0.5rem; z-index:999; text-decoration:none; transition:transform 0.2s; }
+.whatsapp-btn:hover { transform:translateY(-2px); }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+.info-list { list-style:none; margin-top:1.5rem; }
+.info-list li { display:flex; gap:1rem; padding:1rem 0; border-bottom:1px solid rgba(244,145,58,0.1); }
+.info-list h4 { font-size:0.95rem; font-weight:500; color:var(--deep-brown); margin-bottom:0.25rem; }
+.info-list p { font-size:0.83rem; color:var(--warm-gray); line-height:1.6; font-weight:300; }
+
+.booking-templates { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2rem; }
+.template-btn { background:white; border:1.5px solid rgba(244,145,58,0.2); padding:1.2rem; border-radius:16px; cursor:pointer; transition:all 0.2s; text-align:center; }
+.template-btn:hover { border-color:var(--saffron); background:var(--saffron-light); }
+.template-btn.active { background:var(--saffron); color:white; border-color:var(--saffron); }
+.template-btn.active h4 { color:white; }
+.template-btn h4 { font-size:0.95rem; font-weight:500; color:var(--deep-brown); margin-bottom:0.3rem; }
+.template-btn p { font-size:0.75rem; color:var(--warm-gray); font-weight:300; }
+
+@media(max-width:1100px){
+  nav ul{display:none;} .nav-cta{display:none;} .nav-hamburger{display:flex;}
+  .hero{grid-template-columns:1fr;min-height:auto;padding:3rem 1.5rem;}
+  .steps{grid-template-columns:1fr 1fr;} .who-grid,.blog-grid,.booking-templates,.testi-grid,.two-col{grid-template-columns:1fr;}
+  .section{padding:3rem 1.5rem;} footer{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showPage('home')">Beta Ji <span>BAGGAGE SEVA</span></div>
+  <ul>
+    <li><a onclick="showPage('home')">Home</a></li>
+    <li><a onclick="showPage('pricing')">💰 Pricing</a></li>
+    <li><a onclick="showPage('resources')">📚 Resources</a></li>
+    <li><a onclick="showPage('track')">📍 Track</a></li>
+    <li><a onclick="showPage('faq')">FAQ</a></li>
+  </ul>
+  <div class="nav-controls">
+    <button class="lang-toggle" onclick="toggleLanguage()" id="lang-btn">हिंदी</button>
+    <button class="nav-cta" onclick="scrollToBook()"><span class="english">Book</span><span class="hindi">बुक करें</span></button>
+    <button class="nav-hamburger" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="nav-drawer" id="nav-drawer">
+  <a onclick="showPage('home');closeDrawer()">🏠 Home</a>
+  <a onclick="showPage('pricing');closeDrawer()">💰 Pricing</a>
+  <a onclick="showPage('resources');closeDrawer()">📚 Resources</a>
+  <a onclick="showPage('track');closeDrawer()">📍 Track Bags</a>
+  <a onclick="showPage('faq');closeDrawer()">❓ FAQ</a>
+  <a onclick="showPage('contact');closeDrawer()">💬 Contact</a>
+  <div class="divider"></div>
+  <a class="drawer-cta" onclick="closeDrawer();scrollToBook()" style="background:var(--saffron);color:white;border-radius:50px;justify-content:center;">📦 Book Now</a>
+</div>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-badge">🇮🇳 <span class="english">Trusted across India</span><span class="hindi">पूरे भारत में विश्वस्त</span></span>
+    <h1><span class="english">Travel <em>light,</em><br>arrive <em>happy.</em></span><span class="hindi">हल्के होकर यात्रा करें,<br><em>खुश होकर पहुंचें।</em></span></h1>
+    <p><span class="english">See where Beta Ji carries your loved ones' bags 💚</span><span class="hindi">देखें कि बीटा जी आपके बैग कहां ले जाता है 💚</span></p>
+    <div class="hero-btns">
+      <a class="btn-primary" onclick="scrollToBook()"><span class="english">Book Now</span><span class="hindi">अभी बुक करें</span></a>
+      <span class="btn-secondary" onclick="document.querySelector('.booking-templates').scrollIntoView({behavior:'smooth'})"><span class="english">See templates</span><span class="hindi">टेम्पलेट देखें</span></span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-stack">
+      <div class="float-card card1">
+        <div class="card-icon">👵</div>
+        <div class="card-title"><span class="english">Dadi's bags</span><span class="hindi">दादी के बैग</span></div>
+        <div class="card-sub"><span class="english">3 bags picked, safely delivered</span><span class="hindi">3 बैग सुरक्षित डिलीवर</span></div>
+        <span class="card-tag">✓ <span class="english">Delivered</span><span class="hindi">डिलीवर हुआ</span></span>
+      </div>
+      <div class="float-card card2">
+        <div class="card-icon">✈️</div>
+        <div class="card-title"><span class="english">No airline fees</span><span class="hindi">कोई शुल्क नहीं</span></div>
+        <div class="card-sub"><span class="english">Send ahead, skip charges</span><span class="hindi">आगे भेजें, शुल्क बचाएं</span></div>
+        <span class="card-tag orange">Save ₹3,200+</span>
+      </div>
+      <div class="float-card card3">
+        <div class="card-icon">💍</div>
+        <div class="card-title"><span class="english">Wedding sorted</span><span class="hindi">शादी व्यवस्थित</span></div>
+        <div class="card-sub"><span class="english">12 bags delivered on time</span><span class="hindi">12 बैग समय पर</span></div>
+        <span class="card-tag">✓ <span class="english">On time</span><span class="hindi">समय पर</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-num">12,400+</div>
+    <div class="trust-label"><span class="english">Happy Deliveries</span><span class="hindi">खुश डिलीवरी</span></div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-num">98.6%</div>
+    <div class="trust-label"><span class="english">On-Time Rate</span><span class="hindi">समय पर दर</span></div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-num">40+ Cities</div>
+    <div class="trust-label"><span class="english">Across India</span><span class="hindi">भारत भर में</span></div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-num">₹199+</div>
+    <div class="trust-label"><span class="english">Starting Price</span><span class="hindi">शुरुआती कीमत</span></div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-label"><span class="english">How it works</span><span class="hindi">यह कैसे काम करता है</span></div>
+  <h2 class="section-heading serif"><span class="english">Four easy steps.<br>Zero heavy lifting.</span><span class="hindi">4 आसान कदम।<br>कोई तनाव नहीं।</span></h2>
+  <p class="section-sub"><span class="english">As simple as asking a trusted family member for help. Book online, we do the rest.</span><span class="hindi">एक विश्वस्त परिवार के सदस्य से मदद मांगना उतना ही सरल है।</span></p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3><span class="english">Book online</span><span class="hindi">ऑनलाइन बुक करें</span></h3>
+      <p><span class="english">Tell us your pickup address, destination, and bags. Takes under 2 minutes.</span><span class="hindi">हमें अपना पता, गंतव्य और बैग बताएं।</span></p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3><span class="english">We pick up</span><span class="hindi">हम पिक अप करते हैं</span></h3>
+      <p><span class="english">Our verified staff arrives at your door. We tag and handle every bag with care.</span><span class="hindi">हमारी टीम आपके दरवाजे पर पहुंचती है।</span></p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3><span class="english">Track live</span><span class="hindi">लाइव ट्रैक करें</span></h3>
+      <p><span class="english">Get real-time updates on your phone. You'll always know where your bags are.</span><span class="hindi">आपके फोन पर लाइव अपडेट पाएं।</span></p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3><span class="english">Delivered safely</span><span class="hindi">सुरक्षित डिलीवर</span></h3>
+      <p><span class="english">Your bags arrive at the destination. Sign off and relax — job done.</span><span class="hindi">आपके बैग सुरक्षित पहुंच जाते हैं।</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:white;">
+  <div class="section-label"><span class="english">Made for everyone</span><span class="hindi">सभी के लिए बनाया गया</span></div>
+  <h2 class="section-heading serif"><span class="english">Who we look after</span><span class="hindi">हम किसकी देखभाल करते हैं</span></h2>
+  <p class="section-sub"><span class="english">Beta Ji was built for every traveller who deserves a helping hand.</span><span class="hindi">बीटा जी हर यात्री के लिए बनाया गया जो मदद के योग्य है।</span></p>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-card-top">
+        <div class="who-emoji">👴👵</div>
+        <h3><span class="english">Elderly travellers</span><span class="hindi">वरिष्ठ यात्री</span></h3>
+      </div>
+      <div class="who-card-body">
+        <p><span class="english">When Dadi or Nana travels alone, we ensure their bags are never a burden. Safe, door-to-door, with care.</span><span class="hindi">जब दादा-दादी यात्रा करते हैं, हम देखभाल करते हैं।</span></p>
+        <ul>
+          <li><span class="english">Door-to-door pickup & delivery</span><span class="hindi">घर से घर डिलीवरी</span></li>
+          <li><span class="english">Gentle, verified handlers</span><span class="hindi">सुरक्षित हैंडलर</span></li>
+          <li><span class="english">Family WhatsApp updates</span><span class="hindi">परिवार को व्हाट्सएप अपडेट</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="who-card">
+      <div class="who-card-top">
+        <div class="who-emoji">💍🎊</div>
+        <h3><span class="english">Wedding parties</span><span class="hindi">शादी की पार्टियां</span></h3>
+      </div>
+      <div class="who-card-body">
+        <p><span class="english">Shaadi season means mountains of bags. Let Beta Ji handle luggage while you celebrate.</span><span class="hindi">शादी के दौरान हम सभी बैग संभालते हैं।</span></p>
+        <ul>
+          <li><span class="english">Bulk booking for 5+ bags</span><span class="hindi">5+ बैग के लिए बल्क</span></li>
+          <li><span class="english">Venue-to-venue delivery</span><span class="hindi">वेन्यू से वेन्यू</span></li>
+          <li><span class="english">Special lehenga & suit handling</span><span class="hindi">लेहंगा और शेरवानी</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="who-card">
+      <div class="who-card-top">
+        <div class="who-emoji">🎓✈️</div>
+        <h3><span class="english">Students going abroad</span><span class="hindi">विदेश जाने वाले छात्र</span></h3>
+      </div>
+      <div class="who-card-body">
+        <p><span class="english">Skip airline excess baggage fees. Ship your bags and arrive at the airport unburdened.</span><span class="hindi">एयरलाइन शुल्क न दें, हमें दीजिए।</span></p>
+        <ul>
+          <li><span class="english">Save on airline excess charges</span><span class="hindi">एयरलाइन शुल्क बचाएं</span></li>
+          <li><span class="english">Ship to airport or city</span><span class="hindi">शहर को भेजें</span></li>
+          <li><span class="english">Student-friendly pricing</span><span class="hindi">छात्र मूल्य निर्धारण</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="section-label"><span class="english">Real stories</span><span class="hindi">असली कहानियां</span></div>
+  <h2 class="section-heading serif"><span class="english">What our families say</span><span class="hindi">हमारे परिवार क्या कहते हैं</span></h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text"><span class="english">"My mother is 74 and travels every year. She called saying she felt like she had a son helping her. Truly the right name!"</span><span class="hindi">"मेरी माँ को लगा कि उसका बेटा उसके बैग ले जा रहा है।"</span></p>
+      <div class="testi-author">
+        <div class="testi-avatar av1">RV</div>
+        <div>
+          <div class="testi-name"><span class="english">Rajan Verma</span><span class="hindi">राजन वर्मा</span></div>
+          <div class="testi-role"><span class="english">Mumbai</span><span class="hindi">मुंबई</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text"><span class="english">"8 people, 14 bags for my cousin's wedding in Udaipur. Beta Ji picked everything up. It was already at the hotel when we arrived!"</span><span class="hindi">"शादी के लिए 14 बैग! बीटा जी ने सब संभाल दिया।"</span></p>
+      <div class="testi-author">
+        <div class="testi-avatar av2">PS</div>
+        <div>
+          <div class="testi-name"><span class="english">Priya Sharma</span><span class="hindi">प्रिया शर्मा</span></div>
+          <div class="testi-role"><span class="english">Delhi</span><span class="hindi">दिल्ली</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text"><span class="english">"Flying to Canada for my Masters. Airline wanted ₹18,000 extra. Beta Ji shipped them for ₹3,400. Absolute lifesaver!"</span><span class="hindi">"कनाडा जाते समय हजारों बचाए।"</span></p>
+      <div class="testi-author">
+        <div class="testi-avatar av3">AK</div>
+        <div>
+          <div class="testi-name"><span class="english">Arjun Kapoor</span><span class="hindi">अर्जुन कपूर</span></div>
+          <div class="testi-role"><span class="english">Pune → Canada</span><span class="hindi">पुणे → कनाडा</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking-section" id="book">
+  <div style="text-align:center;margin-bottom:3rem;">
+    <div class="section-label"><span class="english">Book now</span><span class="hindi">अभी बुक करें</span></div>
+    <h2 class="section-heading serif" style="margin-bottom:0.5rem;"><span class="english">See where Beta Ji carries your bags 💚</span><span class="hindi">देखें कि बीटा जी कहां ले जाता है 💚</span></h2>
+    <p style="color:var(--warm-gray);font-weight:300;"><span class="english">Fill in your details and we'll get back within 30 minutes. No signup required.</span><span class="hindi">अपने विवरण भरें और हम 30 मिनट में वापस आएंगे।</span></p>
+  </div>
+  <div class="booking-inner">
+    <div style="margin-bottom:2rem;">
+      <h3 style="font-size:0.9rem;font-weight:500;color:var(--deep-brown);margin-bottom:1rem;"><span class="english">Pick your journey type</span><span class="hindi">अपनी यात्रा का प्रकार चुनें</span></h3>
+      <div class="booking-templates">
+        <div class="template-btn active" onclick="selectTemplate(this)">
+          <h4>👵 <span class="english">Elderly</span><span class="hindi">वरिष्ठ</span></h4>
+          <p><span class="english">Safe, door-to-door</span><span class="hindi">सुरक्षित</span></p>
+        </div>
+        <div class="template-btn" onclick="selectTemplate(this)">
+          <h4>💍 <span class="english">Wedding</span><span class="hindi">शादी</span></h4>
+          <p><span class="english">Bulk bags handled</span><span class="hindi">बल्क बैग</span></p>
+        </div>
+        <div class="template-btn" onclick="selectTemplate(this)">
+          <h4>🎓 <span class="english">Student</span><span class="hindi">छात्र</span></h4>
+          <p><span class="english">Skip airline fees</span><span class="hindi">शुल्क बचाएं</span></p>
+        </div>
+      </div>
+    </div>
+
+    <form onsubmit="handleSubmit(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label><span class="english">Your name</span><span class="hindi">आपका नाम</span></label>
+          <input type="text" id="booking-name" placeholder="Ramesh Kumar" required/>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Phone number</span><span class="hindi">फोन नंबर</span></label>
+          <input type="tel" placeholder="+91 98765 43210" required/>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Email (optional)</span><span class="hindi">ईमेल (वैकल्पिक)</span></label>
+          <input type="email" placeholder="your@email.com"/>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Preferred contact method</span><span class="hindi">संपर्क विधि</span></label>
+          <select>
+            <option><span class="english">WhatsApp</span><span class="hindi">व्हाट्सएप</span></option>
+            <option><span class="english">Phone call</span><span class="hindi">फोन कॉल</span></option>
+            <option><span class="english">SMS</span><span class="hindi">एसएमएस</span></option>
+          </select>
+        </div>
+
+        <div class="form-group full" style="border-top:1px solid rgba(244,145,58,0.15);padding-top:1.5rem;margin-top:1rem;">
+          <label style="font-weight:600;color:var(--warm-brown);text-transform:uppercase;font-size:0.75rem;"><span class="english">📍 Pickup Details</span><span class="hindi">पिकअप विवरण</span></label>
+        </div>
+
+        <div class="form-group full">
+          <label><span class="english">Pickup city & address</span><span class="hindi">पिकअप शहर और पता</span></label>
+          <input type="text" placeholder="e.g. Jaipur, Vaishali Nagar, Block A, Apartment 302" required/>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Pickup date</span><span class="hindi">पिकअप तारीख</span></label>
+          <input type="date" required/>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Preferred pickup time</span><span class="hindi">पसंदीदा पिकअप समय</span></label>
+          <select>
+            <option><span class="english">Morning (7am – 11am)</span><span class="hindi">सुबह (7-11 AM)</span></option>
+            <option><span class="english">Afternoon (11am – 3pm)</span><span class="hindi">दोपहर (11-3 PM)</span></option>
+            <option><span class="english">Evening (3pm – 7pm)</span><span class="hindi">शाम (3-7 PM)</span></option>
+          </select>
+        </div>
+
+        <div class="form-group full" style="border-top:1px solid rgba(244,145,58,0.15);padding-top:1.5rem;margin-top:1rem;">
+          <label style="font-weight:600;color:var(--warm-brown);text-transform:uppercase;font-size:0.75rem;"><span class="english">📦 Bag Details</span><span class="hindi">बैग विवरण</span></label>
+        </div>
+
+        <div class="form-group">
+          <label><span class="english">Number of bags</span><span class="hindi">बैग की संख्या</span></label>
+          <select>
+            <option>1 bag</option>
+            <option>2 bags</option>
+            <option>3–5 bags</option>
+            <option>6–10 bags</option>
+            <option><span class="english">More than 10 bags</span><span class="hindi">10 से अधिक बैग</span></option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Total weight (approx)</span><span class="hindi">कुल वजन (लगभग)</span></label>
+          <select>
+            <option>Up to 20 kg</option>
+            <option>20–50 kg</option>
+            <option>50–100 kg</option>
+            <option><span class="english">More than 100 kg</span><span class="hindi">100 किग्रा से अधिक</span></option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Bag type</span><span class="hindi">बैग का प्रकार</span></label>
+          <select>
+            <option><span class="english">Suitcase / Trolley</span><span class="hindi">सूटकेस / ट्रॉली</span></option>
+            <option><span class="english">Backpack</span><span class="hindi">बैकपैक</span></option>
+            <option><span class="english">Duffel bag</span><span class="hindi">डफल बैग</span></option>
+            <option><span class="english">Mixed</span><span class="hindi">मिश्रित</span></option>
+          </select>
+        </div>
+
+        <div class="form-group full" style="border-top:1px solid rgba(244,145,58,0.15);padding-top:1.5rem;margin-top:1rem;">
+          <label style="font-weight:600;color:var(--warm-brown);text-transform:uppercase;font-size:0.75rem;"><span class="english">🎯 Delivery Details</span><span class="hindi">डिलीवरी विवरण</span></label>
+        </div>
+
+        <div class="form-group full">
+          <label><span class="english">Delivery city & address</span><span class="hindi">डिलीवरी शहर और पता</span></label>
+          <input type="text" placeholder="e.g. Mumbai, Bandra West, Linking Road Area, Apt 501" required/>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Delivery date</span><span class="hindi">डिलीवरी तारीख</span></label>
+          <input type="date" required/>
+        </div>
+        <div class="form-group">
+          <label><span class="english">Type of trip</span><span class="hindi">यात्रा का प्रकार</span></label>
+          <select>
+            <option><span class="english">Elderly traveller</span><span class="hindi">वरिष्ठ यात्री</span></option>
+            <option><span class="english">Wedding / family function</span><span class="hindi">शादी / पारिवारिक कार्यक्रम</span></option>
+            <option><span class="english">Student going abroad</span><span class="hindi">विदेश जाने वाला छात्र</span></option>
+            <option><span class="english">International travel</span><span class="hindi">अंतर्राष्ट्रीय यात्रा</span></option>
+            <option><span class="english">General domestic travel</span><span class="hindi">सामान्य घरेलू यात्रा</span></option>
+            <option><span class="english">Other</span><span class="hindi">अन्य</span></option>
+          </select>
+        </div>
+
+        <div class="form-group full" style="border-top:1px solid rgba(244,145,58,0.15);padding-top:1.5rem;margin-top:1rem;">
+          <label><span class="english">Any special instructions or fragile items?</span><span class="hindi">कोई विशेष निर्देश या नाजुक वस्तुएं?</span></label>
+          <textarea rows="3" placeholder="e.g. Contains fragile items, elderly person needs assistance, gate code is 1234, contains wedding lehenga, etc."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn"><span class="english">Request My Pickup</span><span class="hindi">मेरा पिकअप अनुरोध करें</span> →</button>
+      <p style="font-size:0.75rem;color:var(--warm-gray);margin-top:1rem;text-align:center;"><span class="english">✓ No login required · Free to cancel anytime · Live WhatsApp updates · 30-min response time</span><span class="hindi">✓ कोई लॉगिन नहीं · कभी भी मुफ़्त रद्द करें · लाइव व्हाट्सएप अपडेट</span></p>
+    </form>
+  </div>
+</section>
+
+</div>
+
+<!-- PRICING PAGE -->
+<div id="page-pricing" class="page">
+<div class="svc-hero" style="background:var(--cream);">
+  <div class="svc-hero-inner">
+    <span class="back-btn" onclick="showPage('home')">← <span class="english">Back</span></span>
+    <h1><span class="english">See the real cost<br>difference. Save thousands. 💚</span></h1>
+    <p><span class="english">Airline excess baggage vs Beta Ji — actual 2026 rates</span></p>
+  </div>
+</div>
+
+<section class="section" style="background:white;">
+  <div class="section-label"><span class="english">Domestic flights</span></div>
+  <h2 class="section-heading serif"><span class="english">Flying within India? Here's what airlines charge.</span></h2>
+  
+  <div style="overflow-x:auto;margin:2rem 0;">
+    <table class="allowance-table" style="width:100%;margin:0;">
+      <thead>
+        <tr>
+          <th style="text-align:left;"><span class="english">Scenario</span></th>
+          <th><span class="english">Air India</span></th>
+          <th><span class="english">IndiGo</span></th>
+          <th><span class="english">SpiceJet</span></th>
+          <th style="background:var(--saffron-light);font-weight:700;"><span class="english">Beta Ji</span></th>
+          <th style="color:var(--soft-green);font-weight:700;"><span class="english">You Save</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:left;"><strong><span class="english">1 extra bag (5 kg)</span></strong></td>
+          <td>₹2,000–3,000</td>
+          <td>₹1,900</td>
+          <td>₹1,600</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹199–349</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹1,251–2,801</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;"><strong><span class="english">2 extra bags (10 kg total)</span></strong></td>
+          <td>₹3,500–5,000</td>
+          <td>₹3,800</td>
+          <td>₹3,200</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹349–599</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹2,601–4,651</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;"><strong><span class="english">3 extra bags (15 kg total)</span></strong></td>
+          <td>₹5,500–7,500</td>
+          <td>₹5,700</td>
+          <td>₹4,800</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹499–799</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹4,001–7,001</span></td>
+        </tr>
+        <tr style="background:#f5f5f5;">
+          <td style="text-align:left;"><strong><span class="english">Wedding party (8 people, 2 bags each = 16 bags)</span></strong></td>
+          <td>₹88,000–120,000</td>
+          <td>₹91,200</td>
+          <td>₹76,800</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹3,184–5,984</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹72,016–116,816</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="background:var(--saffron-light);border-radius:16px;padding:1.5rem;margin:2rem 0;border-left:4px solid var(--saffron);">
+    <p style="font-size:0.9rem;color:var(--warm-brown);line-height:1.7;margin:0;"><strong>💡 How airlines calculate:</strong> <span class="english">Most airlines charge ₹550–700/kg for excess baggage at airport counters. Online pre-booking saves 20–30%. But even pre-booked, a 5 kg bag costs ₹1,600–1,900. For weddings with 10+ bags, airline costs spiral quickly.</span></p>
+  </div>
+</section>
+
+<section class="section" style="background:#FFF5E6;">
+  <div class="section-label"><span class="english">International flights</span></div>
+  <h2 class="section-heading serif"><span class="english">Studying abroad or visiting family? See the real difference.</span></h2>
+  
+  <div style="overflow-x:auto;margin:2rem 0;">
+    <table class="allowance-table" style="width:100%;margin:0;">
+      <thead>
+        <tr>
+          <th style="text-align:left;"><span class="english">Route</span></th>
+          <th><span class="english">Airline Cost (per bag)</span></th>
+          <th><span class="english">Actual Rate</span></th>
+          <th style="background:var(--saffron-light);font-weight:700;"><span class="english">Beta Ji Cost</span></th>
+          <th style="color:var(--soft-green);font-weight:700;"><span class="english">You Save</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:left;"><strong>🇬🇧 <span class="english">India → UK</span></strong></td>
+          <td><span class="english">Air India</span></td>
+          <td>$20–30/kg (₹1,680–2,520)</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹2,800</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹1,680–2,520</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;"><strong>🇺🇸 <span class="english">India → USA</span></strong></td>
+          <td><span class="english">IndiGo/Air India</span></td>
+          <td>$25–35/kg (₹2,100–2,940)</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹3,200</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹1,260–2,100</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;"><strong>🇦🇺 <span class="english">India → Australia</span></strong></td>
+          <td><span class="english">Air India/SpiceJet</span></td>
+          <td>$30–40/kg (₹2,520–3,360)</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹3,500</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹840–2,100</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;"><strong>🇨🇦 <span class="english">India → Canada</span></strong></td>
+          <td><span class="english">Air India/IndiGo</span></td>
+          <td>$25–35/kg (₹2,100–2,940)</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹3,400</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹840–2,100</span></td>
+        </tr>
+        <tr style="background:#f5f5f5;">
+          <td style="text-align:left;"><strong><span class="english">Student shipping 2–3 bags</span></strong></td>
+          <td><span class="english">Air India (2 bags @ $30/kg)</span></td>
+          <td>₹10,080–13,440</td>
+          <td style="background:var(--saffron-light);font-weight:700;color:var(--saffron);">₹6,400–10,500</td>
+          <td style="color:var(--soft-green);font-weight:700;"><span class="save-badge">₹3,680–6,940</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="background:var(--saffron-light);border-radius:16px;padding:1.5rem;margin:2rem 0;border-left:4px solid var(--saffron);">
+    <p style="font-size:0.9rem;color:var(--warm-brown);line-height:1.7;margin:0;"><strong>📌 Key insight:</strong> <span class="english">International airlines use a "piece concept" on US/UK/Australia routes — you pay ₹1,680–3,360 per extra bag regardless of weight (up to 23–32 kg per piece). Beta Ji charges a flat rate per bag, so heavier bags cost the same as light ones. That's a huge win for students shipping textbooks, winter clothes, and home goods.</span></p>
+  </div>
+</section>
+
+<section class="section" style="background:white;">
+  <h2 class="section-heading serif"><span class="english">Real-world examples</span></h2>
+  
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin:2rem 0;">
+    <div style="background:#FDF0E3;border-radius:16px;padding:2rem;">
+      <div style="font-size:1.8rem;margin-bottom:1rem;">👵</div>
+      <h3 style="font-family:'Playfair Display',serif;color:var(--deep-brown);margin-bottom:1rem;"><span class="english">Elderly traveller<br>Delhi → Mumbai</span></h3>
+      <div style="font-size:0.85rem;color:var(--warm-gray);line-height:1.8;">
+        <div style="margin-bottom:1rem;">
+          <strong><span class="english">3 bags, 20 kg each</span></strong><br/>
+          <span class="english">Flights already booked 15 kg free</span>
+        </div>
+        <div style="padding:1rem;background:white;border-radius:12px;margin-bottom:0.5rem;">
+          <div style="color:var(--warm-brown);"><strong><span class="english">Air India</span></strong>: ₹7,500</div>
+        </div>
+        <div style="padding:1rem;background:var(--saffron-light);border-radius:12px;border:2px solid var(--saffron);">
+          <div style="color:var(--saffron);"><strong><span class="english">Beta Ji</span></strong>: ₹599 <span style="color:var(--soft-green);font-weight:700;">(-₹6,901)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#E8F5E9;border-radius:16px;padding:2rem;">
+      <div style="font-size:1.8rem;margin-bottom:1rem;">💍</div>
+      <h3 style="font-family:'Playfair Display',serif;color:var(--deep-brown);margin-bottom:1rem;"><span class="english">Wedding baraat<br>Jaipur → Udaipur</span></h3>
+      <div style="font-size:0.85rem;color:var(--warm-gray);line-height:1.8;">
+        <div style="margin-bottom:1rem;">
+          <strong><span class="english">12 people, 2 bags each<br>= 24 bags, 18 kg avg</span></strong>
+        </div>
+        <div style="padding:1rem;background:white;border-radius:12px;margin-bottom:0.5rem;">
+          <div style="color:var(--warm-brown);"><strong><span class="english">6 flights @ ₹7,500 each</span></strong><br/>Total: ₹45,000+</div>
+        </div>
+        <div style="padding:1rem;background:var(--saffron-light);border-radius:12px;border:2px solid var(--saffron);">
+          <div style="color:var(--saffron);"><strong><span class="english">Beta Ji</span></strong>: ₹2,400–4,000 <span style="color:var(--soft-green);font-weight:700;">(-₹41,000+)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#EAF2FB;border-radius:16px;padding:2rem;">
+      <div style="font-size:1.8rem;margin-bottom:1rem;">🎓</div>
+      <h3 style="font-family:'Playfair Display',serif;color:var(--deep-brown);margin-bottom:1rem;"><span class="english">Student abroad<br>Mumbai → London</span></h3>
+      <div style="font-size:0.85rem;color:var(--warm-gray);line-height:1.8;">
+        <div style="margin-bottom:1rem;">
+          <strong><span class="english">3 bags, 25 kg each<br>Carry-on only free</span></strong>
+        </div>
+        <div style="padding:1rem;background:white;border-radius:12px;margin-bottom:0.5rem;">
+          <div style="color:var(--warm-brown);"><strong><span class="english">Air India</span></strong>: ₹10,080–13,440</div>
+        </div>
+        <div style="padding:1rem;background:var(--saffron-light);border-radius:12px;border:2px solid var(--saffron);">
+          <div style="color:var(--saffron);"><strong><span class="english">Beta Ji</span></strong>: ₹8,400 <span style="color:var(--soft-green);font-weight:700;">(-₹1,680–5,040)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2 class="serif"><span class="english">Ready to save?</span></h2>
+  <p><span class="english">Book your first shipment now. See where Beta Ji carries your bags 💚</span></p>
+  <button class="btn-primary" onclick="showPage('home');setTimeout(()=>document.getElementById('book').scrollIntoView({behavior:'smooth'}),100)">📦 <span class="english">Book Now</span></button>
+</div>
+</div>
+
+<!-- RESOURCES PAGE -->
+<div id="page-resources" class="page">
+<div class="svc-hero" style="background:var(--cream);">
+  <div class="svc-hero-inner">
+    <span class="back-btn" onclick="showPage('home')">← <span class="english">Back</span></span>
+    <h1><span class="english">Travel smarter.<br>Save more. 💡</span></h1>
+  </div>
+</div>
+
+<section class="section" style="background:white;">
+  <h2 class="section-heading serif"><span class="english">Baggage Allowance Comparison</span></h2>
+  <table class="allowance-table">
+    <thead><tr><th><span class="english">Airline</span></th><th><span class="english">Per Extra Bag</span></th><th><span class="english">Beta Ji Cost</span></th><th><span class="english">You Save</span></th></tr></thead>
+    <tbody>
+      <tr><td>Air India</td><td>₹5,500+</td><td>₹2,800</td><td><span class="save-badge">₹2,700+</span></td></tr>
+      <tr><td>IndiGo</td><td>₹4,500+</td><td>₹2,800</td><td><span class="save-badge">₹1,700+</span></td></tr>
+      <tr><td>SpiceJet</td><td>₹4,500+</td><td>₹2,800</td><td><span class="save-badge">₹1,700+</span></td></tr>
+      <tr><td>Vistara</td><td>₹6,000+</td><td>₹2,800</td><td><span class="save-badge">₹3,200+</span></td></tr>
+      <tr><td>AirAsia</td><td>₹4,000+</td><td>₹2,800</td><td><span class="save-badge">₹1,200+</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <h2 class="section-heading serif"><span class="english">Blog & Guides</span></h2>
+  <div class="blog-grid">
+    <div class="blog-card">
+      <div class="blog-card-img">👵</div>
+      <div class="blog-card-body">
+        <h3><span class="english">5 Tips for Elderly Travellers</span></h3>
+        <p><span class="english">How to pack smartly and travel safely.</span></p>
+        <a onclick="alert('Coming soon!')"><span class="english">Read more</span> →</a>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-card-img">💍</div>
+      <div class="blog-card-body">
+        <h3><span class="english">Wedding Packing Checklist</span></h3>
+        <p><span class="english">Complete list for wedding guests.</span></p>
+        <a onclick="alert('Coming soon!')"><span class="english">Download</span> →</a>
+      </div>
+    </div>
+    <div class="blog-card">
+      <div class="blog-card-img">🎓</div>
+      <div class="blog-card-body">
+        <h3><span class="english">Student Travel Guide</span></h3>
+        <p><span class="english">Everything about shipping abroad.</span></p>
+        <a onclick="showPage('country-guides')"><span class="english">View</span> →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="luggage-section">
+  <h2 class="section-heading serif"><span class="english">Luggage Size Guide</span></h2>
+  
+  <div style="overflow-x:auto;margin:2rem 0;">
+    <table class="allowance-table" style="width:100%;margin:0;">
+      <thead>
+        <tr>
+          <th style="text-align:left;"><span class="english">Type of Luggage</span></th>
+          <th><span class="english">Dimensions (inches)</span></th>
+          <th><span class="english">Dimensions (cm)</span></th>
+          <th><span class="english">Capacity (liters)</span></th>
+          <th><span class="english">Uses</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:left;font-weight:500;"><span class="english">Personal Items</span></td>
+          <td>18 × 14 × 8</td>
+          <td>46 × 36 × 20</td>
+          <td>10–20 L</td>
+          <td style="font-size:0.8rem;"><span class="english">Essentials, electronics, snacks</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;font-weight:500;"><span class="english">Carry-on / Small Checked</span></td>
+          <td>22 × 14 × 9</td>
+          <td>56 × 36 × 23</td>
+          <td>35–45 L</td>
+          <td style="font-size:0.8rem;"><span class="english">Short trips (2–3 days) or weekend getaways</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;font-weight:500;"><span class="english">Medium Checked Bag</span></td>
+          <td>24 × 16 × 10</td>
+          <td>61 × 41 × 25</td>
+          <td>60–80 L</td>
+          <td style="font-size:0.8rem;"><span class="english">Week-long trips (4–5 days)</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;font-weight:500;"><span class="english">Large Checked Bag</span></td>
+          <td>28 × 18 × 12</td>
+          <td>71 × 46 × 30</td>
+          <td>90–100 L</td>
+          <td style="font-size:0.8rem;"><span class="english">Long travels (7+ days)</span></td>
+        </tr>
+        <tr>
+          <td style="text-align:left;font-weight:500;"><span class="english">Extra Large Checked Bag</span></td>
+          <td>32 × 20 × 14</td>
+          <td>81 × 51 × 36</td>
+          <td>120–140 L</td>
+          <td style="font-size:0.8rem;"><span class="english">Extended trips, family vacations, relocations</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="background:var(--saffron-light);border-radius:16px;padding:1.5rem;margin:2rem 0;border-left:4px solid var(--saffron);">
+    <p style="font-size:0.9rem;color:var(--warm-brown);line-height:1.7;margin:0;"><strong>💡 Tip for Beta Ji bookings:</strong> <span class="english">Most airlines limit checked bags to 158 cm total dimensions (L+W+H). If your bag is within these limits, Beta Ji will handle it. Oversized bags attract special handling fees of ₹2,500–4,000 on airlines — we ship them for the same flat rate!</span></p>
+  </div>
+</section>
+
+<section class="section" id="videos-section">
+  <h2 class="section-heading serif"><span class="english">Video Tutorials</span></h2>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;margin-top:2rem;">
+    <div>
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;"><span class="english">How to Book in 2 Minutes</span></h3>
+      <div class="video-box"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
+    </div>
+    <div>
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;"><span class="english">What Happens at Pickup</span></h3>
+      <div class="video-box"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
+    </div>
+    <div>
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;"><span class="english">How to Track Your Bags</span></h3>
+      <div class="video-box"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
+    </div>
+    <div>
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;"><span class="english">Wedding Packing Guide</span></h3>
+      <div class="video-box"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- COUNTRY GUIDES PAGE -->
+<div id="page-country-guides" class="page">
+<div class="svc-hero" style="background:var(--cream);">
+  <div class="svc-hero-inner">
+    <span class="back-btn" onclick="showPage('resources')">← <span class="english">Back</span></span>
+    <h1><span class="english">Ship to 50+ countries<br>with confidence.</span></h1>
+  </div>
+</div>
+
+<section class="section" style="background:white;">
+  <h2 class="section-heading serif"><span class="english">Country-Specific Guides</span></h2>
+
+  <div class="country-card">
+    <h3>🇬🇧 United Kingdom</h3>
+    <div><strong><span class="english">Delivery Time:</span></strong><span>7–10 working days</span></div>
+    <div><strong><span class="english">Cost:</span></strong><span>₹2,800/bag</span></div>
+    <div><strong><span class="english">Max Weight:</span></strong><span>30kg per bag</span></div>
+    <div><strong><span class="english">Restrictions:</span></strong><span><span class="english">Sealed food boxes OK, fresh food NO</span></span></div>
+    <div><strong><span class="english">Customs:</span></strong><span><span class="english">Usually no duties on personal items</span></span></div>
+  </div>
+
+  <div class="country-card">
+    <h3>🇺🇸 USA</h3>
+    <div><strong><span class="english">Delivery Time:</span></strong><span>10–14 working days</span></div>
+    <div><strong><span class="english">Cost:</span></strong><span>₹3,200/bag</span></div>
+    <div><strong><span class="english">Max Weight:</span></strong><span>30kg per bag</span></div>
+    <div><strong><span class="english">Restrictions:</span></strong><span><span class="english">No liquids, produce, or meats</span></span></div>
+    <div><strong><span class="english">Customs:</span></strong><span><span class="english">Student items often duty-free</span></span></div>
+  </div>
+
+  <div class="country-card">
+    <h3>🇦🇺 Australia</h3>
+    <div><strong><span class="english">Delivery Time:</span></strong><span>10–14 working days</span></div>
+    <div><strong><span class="english">Cost:</span></strong><span>₹3,500/bag</span></div>
+    <div><strong><span class="english">Biosecurity:</span></strong><span style="color:red;font-weight:bold;">⚠️ NO nuts, seeds, spices, rice, flours</span></div>
+    <div><strong><span class="english">Customs:</span></strong><span><span class="english">We handle all AQIS agricultural forms</span></span></div>
+  </div>
+
+  <div class="country-card">
+    <h3>🇮🇪 Ireland & EU</h3>
+    <div><strong><span class="english">Delivery Time:</span></strong><span>8–12 working days</span></div>
+    <div><strong><span class="english">Cost:</span></strong><span>₹2,800–₹3,000/bag</span></div>
+    <div><strong><span class="english">Restrictions:</span></strong><span><span class="english">Sealed foods OK, fresh prohibited</span></span></div>
+    <div><strong><span class="english">VAT:</span></strong><span><span class="english">No VAT on student personal effects</span></span></div>
+  </div>
+</section>
+</div>
+
+<!-- TRACK PAGE -->
+<div id="page-track" class="page">
+<div class="svc-hero" style="background:var(--cream);">
+  <div class="svc-hero-inner">
+    <span class="back-btn" onclick="showPage('home')">← <span class="english">Back</span></span>
+    <h1><span class="english">See where Beta Ji carries<br>your loved ones' bags 💚</span><span class="hindi">देखें कि बीटा जी कहां ले जाता है 💚</span></h1>
+  </div>
+</div>
+
+<section class="section" style="background:white;">
+  <div style="max-width:600px;margin:0 auto;">
+    <div style="background:var(--saffron-light);border-radius:24px;padding:2.5rem;">
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--deep-brown);margin-bottom:1rem;"><span class="english">Track your shipment</span></h3>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <input type="text" id="track-input" placeholder="Booking ID or phone number" style="padding:0.9rem;border-radius:12px;border:1px solid rgba(244,145,58,0.15);"/>
+        <button onclick="doTrack()" class="btn-primary" style="width:100%;"><span class="english">Track Now</span> →</button>
+      </div>
+      <div id="track-result" style="display:none;margin-top:2rem;background:white;border-radius:16px;padding:1.5rem;"></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- FAQ PAGE -->
+<div id="page-faq" class="page">
+<div class="svc-hero" style="background:var(--cream);">
+  <div class="svc-hero-inner">
+    <span class="back-btn" onclick="showPage('home')">← <span class="english">Back</span></span>
+    <h1><span class="english">Questions?<br>We have <em>answers.</em></span></h1>
+  </div>
+</div>
+
+<section class="section" style="background:white;">
+  <div style="max-width:700px;">
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span class="english">How do I book?</span> <span class="faq-icon">+</span></button><div class="faq-a"><span class="english">Use the booking form on our homepage. No login required. We'll call you within 30 minutes to confirm.</span></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span class="english">What's the pricing?</span> <span class="faq-icon">+</span></button><div class="faq-a"><span class="english">Domestic: ₹199–₹349/bag. International: ₹2,800–₹3,500/bag depending on country. Wedding: ₹99–₹149/bag for 5+ bags.</span></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span class="english">Can I cancel?</span> <span class="faq-icon">+</span></button><div class="faq-a"><span class="english">Yes. Free cancellation if done 6+ hours before pickup. Within 6 hours, a ₹99 rescheduling fee applies.</span></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span class="english">What if bags are delayed?</span> <span class="faq-icon">+</span></button><div class="faq-a"><span class="english">You get ₹200 credit per bag per day. We also call you immediately with an updated ETA.</span></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span class="english">How do I track?</span> <span class="faq-icon">+</span></button><div class="faq-a"><span class="english">You'll get a WhatsApp tracking link at pickup. Enter your Booking ID on our Track page for live updates.</span></div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span class="english">What's restricted?</span> <span class="faq-icon">+</span></button><div class="faq-a"><span class="english">No perishable food, liquids over 1L, flammables, or illegal items. Check country guides for specific restrictions.</span></div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="page-contact" class="page">
+<div class="svc-hero" style="background:var(--cream);">
+  <div class="svc-hero-inner">
+    <span class="back-btn" onclick="showPage('home')">← <span class="english">Back</span></span>
+    <h1><span class="english">Let's talk.</span></h1>
+  </div>
+</div>
+
+<section class="section" style="background:white;">
+  <div style="max-width:600px;margin:0 auto;background:var(--saffron-light);border-radius:18px;padding:2rem;">
+    <h3 style="font-family:'Playfair Display',serif;color:var(--deep-brown);margin-bottom:1.5rem;"><span class="english">Get in touch</span></h3>
+    <div style="display:flex;flex-direction:column;gap:1rem;font-size:0.9rem;margin-bottom:2rem;">
+      <div><strong>📞</strong> 1800-BETAJI (8am–9pm)</div>
+      <div><strong>💬</strong> <a href="https://wa.me/919876543210" target="_blank" style="color:var(--saffron);text-decoration:none;font-weight:500;">+91 98765 43210</a> (7am–10pm)</div>
+      <div><strong>✉️</strong> hello@betaji.in</div>
+      <div><strong>📍</strong> Mumbai, India</div>
+    </div>
+    <a href="https://wa.me/919876543210" target="_blank" class="btn-primary" style="width:100%;text-align:center;">💬 <span class="english">Chat on WhatsApp</span></a>
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="logo" onclick="showPage('home')" style="cursor:pointer;">Beta Ji</span>
+    <p><span class="english">India's most caring baggage delivery service. Made with love 💚</span></p>
+  </div>
+  <div class="footer-col">
+    <h4><span class="english">Services</span></h4>
+    <a onclick="showPage('resources')"><span class="english">Resources</span></a>
+    <a onclick="showPage('track')"><span class="english">Track Bags</span></a>
+  </div>
+  <div class="footer-col">
+    <h4><span class="english">Help</span></h4>
+    <a onclick="showPage('faq')"><span class="english">FAQ</span></a>
+    <a onclick="showPage('contact')"><span class="english">Contact</span></a>
+  </div>
+  <div class="footer-col">
+    <h4><span class="english">Connect</span></h4>
+    <a href="https://wa.me/919876543210" target="_blank"><span class="english">WhatsApp</span></a>
+    <a onclick="toggleLanguage()" style="cursor:pointer;"><span class="english">हिंदी / English</span></a>
+  </div>
+</footer>
+<div class="footer-bottom">© 2026 Beta Ji Baggage Seva. <span class="english">Made with love in India</span> 🇮🇳</div>
+
+<a href="https://wa.me/919876543210" class="whatsapp-btn" target="_blank">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="english">Chat</span><span class="hindi">चैट करें</span>
+</a>
+
+<script>
+function toggleLanguage(){const html=document.documentElement;const btn=document.getElementById('lang-btn');if(html.classList.contains('lang-hi')){html.classList.remove('lang-hi');btn.textContent='हिंदी';localStorage.setItem('beta-ji-lang','en');}else{html.classList.add('lang-hi');btn.textContent='English';localStorage.setItem('beta-ji-lang','hi');}}
+function toggleDrawer(){document.getElementById('nav-drawer').classList.toggle('open');}
+function closeDrawer(){document.getElementById('nav-drawer').classList.remove('open');}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const page=document.getElementById('page-'+id);if(!page)return;page.classList.add('active');closeDrawer();window.scrollTo({top:0,behavior:'smooth'});}
+function selectTemplate(btn){document.querySelectorAll('.template-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function handleSubmit(e){e.preventDefault();const name=document.getElementById('booking-name').value;if(name)localStorage.setItem('beta-ji-user',name);const btn=e.target.querySelector('.submit-btn');btn.textContent="✓ Request sent!";btn.style.background='#4A7C59';btn.disabled=true;setTimeout(()=>{e.target.reset();btn.textContent="Request Pickup →";btn.style.background='var(--saffron)';btn.disabled=false;},3000);}
+function scrollToBook(){const el=document.getElementById('book');if(el)el.scrollIntoView({behavior:'smooth'});}
+function scrollToVideos(){const el=document.getElementById('videos-section');if(el){showPage('resources');setTimeout(()=>el.scrollIntoView({behavior:'smooth'}),100);}}
+function doTrack(){const val=document.getElementById('track-input').value.trim();const result=document.getElementById('track-result');if(!val){alert('Enter your Booking ID or phone number');return;}result.style.display='block';result.innerHTML=`<div><strong>Tracking:</strong> ${val}</div><div style="margin-top:1rem;"><strong>Status:</strong> ✓ Picked up<br><strong>Location:</strong> Mumbai hub<br><strong>Delivery:</strong> Tomorrow by 6pm<br><strong>Updates:</strong> Check WhatsApp</div>`;}
+function toggleFaq(btn){const item=btn.closest('.faq-item');const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open');}
+document.addEventListener('DOMContentLoaded',function(){const savedLang=localStorage.getItem('beta-ji-lang');if(savedLang==='hi'){document.documentElement.classList.add('lang-hi');document.getElementById('lang-btn').textContent='English';}});
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+# Beta Ji Robots.txt
+# Allow all search engines to crawl and index
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /*.php$
+Disallow: /?*
+
+# Crawl delay (in seconds) - ask crawlers to wait this long between requests
+Crawl-delay: 2
+
+# Sitemaps
+Sitemap: https://betaji.in/sitemap.xml
+Sitemap: https://betaji.in/sitemap-blog.xml
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
