@@ -400,6 +400,256 @@ footer { background:var(--deep-brown); color:white; padding:3rem; display:grid; 
   </div>
 </section>
 
+<!-- FULL INTERACTIVE DASHBOARD SECTION -->
+<section style="padding: 5rem 3rem; background: white;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+
+    <!-- ANIMATED STATS -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 1.5rem; color: var(--deep-brown);"><span class="english">Why families choose Beta Ji</span><span class="hindi">परिवार क्यों विश्वास करते हैं</span></h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px;">
+        <div style="background: linear-gradient(135deg, rgba(244,145,58,0.1), rgba(244,145,58,0.05)); border-radius: 12px; padding: 24px; text-align: center; border: 1px solid rgba(244,145,58,0.2);">
+          <div style="font-size: 12px; color: var(--warm-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;"><span class="english">Deliveries completed</span><span class="hindi">डिलीवरी पूरी</span></div>
+          <div style="font-size: 36px; font-weight: 500; color: var(--saffron); counter-value: 0;" class="stat-counter">0</div>
+          <div style="font-size: 12px; color: var(--warm-gray); margin-top: 4px;"><span class="english">across India</span><span class="hindi">पूरे भारत में</span></div>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(74,124,89,0.1), rgba(74,124,89,0.05)); border-radius: 12px; padding: 24px; text-align: center; border: 1px solid rgba(74,124,89,0.2);">
+          <div style="font-size: 12px; color: var(--warm-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;"><span class="english">On-time rate</span><span class="hindi">समय पर दर</span></div>
+          <div style="font-size: 36px; font-weight: 500; color: var(--soft-green); counter-value: 0;" class="stat-counter2">0</div>
+          <div style="font-size: 12px; color: var(--warm-gray); margin-top: 4px;"><span class="english">trusted reliability</span><span class="hindi">विश्वसनीय</span></div>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(244,145,58,0.1), rgba(244,145,58,0.05)); border-radius: 12px; padding: 24px; text-align: center; border: 1px solid rgba(244,145,58,0.2);">
+          <div style="font-size: 12px; color: var(--warm-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;"><span class="english">Cities served</span><span class="hindi">शहर कवर</span></div>
+          <div style="font-size: 36px; font-weight: 500; color: var(--saffron); counter-value: 0;" class="stat-counter3">0</div>
+          <div style="font-size: 12px; color: var(--warm-gray); margin-top: 4px;"><span class="english">and growing</span><span class="hindi">और बढ़ रहा</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVINGS CALCULATOR -->
+    <div style="margin-bottom: 3rem; background: rgba(244,145,58,0.05); border-radius: 12px; padding: 24px; border: 1px solid rgba(244,145,58,0.15);">
+      <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 1.5rem; color: var(--deep-brown);"><span class="english">Calculate your savings</span><span class="hindi">अपनी बचत की गणना करें</span></h2>
+      
+      <div style="margin: 20px 0;">
+        <label style="font-size: 14px; color: var(--warm-gray); display: block; margin-bottom: 8px;"><span class="english">Number of bags</span><span class="hindi">बैगों की संख्या</span></label>
+        <input type="range" id="bags-slider" min="1" max="10" value="2" style="width: 100%; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--warm-gray); margin-top: 6px;">
+          <span>1</span>
+          <span id="bags-value" style="font-weight: 500; color: var(--deep-brown);">2 bags</span>
+          <span>10</span>
+        </div>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <label style="font-size: 14px; color: var(--warm-gray); display: block; margin-bottom: 8px;"><span class="english">Destination</span><span class="hindi">गंतव्य</span></label>
+        <select id="destination" style="width: 100%; padding: 8px 12px; border: 0.5px solid rgba(244,145,58,0.2); border-radius: 6px; cursor: pointer; background: var(--cream);">
+          <option value="domestic"><span class="english">Domestic (within India)</span><span class="hindi">घरेलू</span></option>
+          <option value="usa"><span class="english">International (USA/Canada)</span><span class="hindi">अंतर्राष्ट्रीय</span></option>
+          <option value="europe"><span class="english">International (Europe)</span><span class="hindi">यूरोप</span></option>
+          <option value="asia"><span class="english">International (Asia)</span><span class="hindi">एशिया</span></option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+        <div style="background: white; border: 1px solid rgba(244,145,58,0.1); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 12px; color: var(--warm-gray); margin-bottom: 8px;"><span class="english">Airline charge</span><span class="hindi">एयरलाइन शुल्क</span></div>
+          <div style="font-size: 24px; font-weight: 500; color: #D32F2F;" id="airline-cost">₹9,000</div>
+        </div>
+        <div style="background: white; border: 1px solid rgba(74,124,89,0.1); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 12px; color: var(--warm-gray); margin-bottom: 8px;"><span class="english">Beta Ji price</span><span class="hindi">बीटा जी कीमत</span></div>
+          <div style="font-size: 24px; font-weight: 500; color: var(--soft-green);" id="betaji-cost">₹680</div>
+        </div>
+      </div>
+
+      <div style="background: rgba(74,124,89,0.1); border-radius: 12px; padding: 20px; margin-top: 16px; text-align: center; border: 1px solid rgba(74,124,89,0.15);">
+        <div style="font-size: 12px; color: var(--warm-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px;"><span class="english">You save</span><span class="hindi">आप बचाएं</span></div>
+        <div style="font-size: 40px; font-weight: 600; color: var(--soft-green); margin: 12px 0;" id="savings-amount">₹8,320</div>
+        <div style="font-size: 12px; color: var(--soft-green); font-weight: 500;">92% <span class="english">less than airline excess</span><span class="hindi">एयरलाइन से कम</span></div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 1.5rem; color: var(--deep-brown);"><span class="english">Your journey with Beta Ji</span><span class="hindi">बीटा जी के साथ आपकी यात्रा</span></h2>
+      
+      <div style="position: relative; padding: 30px 0;">
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; position: relative;">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(244,145,58,0.2); display: flex; align-items: center; justify-content: center; color: var(--saffron); font-weight: 500; flex-shrink: 0; z-index: 2; position: relative;">1</div>
+          <div style="flex: 1; padding-top: 4px;">
+            <h4 style="font-size: 14px; font-weight: 500; margin: 0 0 4px;"><span class="english">📞 Request pickup</span><span class="hindi">पिकअप का अनुरोध करें</span></h4>
+            <p style="font-size: 12px; color: var(--warm-gray); margin: 0;"><span class="english">Call us or book online. No signup required. We'll confirm within 30 minutes.</span><span class="hindi">हमें कॉल करें या ऑनलाइन बुक करें।</span></p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; position: relative;">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(244,145,58,0.2); display: flex; align-items: center; justify-content: center; color: var(--saffron); font-weight: 500; flex-shrink: 0; z-index: 2; position: relative;">2</div>
+          <div style="flex: 1; padding-top: 4px;">
+            <h4 style="font-size: 14px; font-weight: 500; margin: 0 0 4px;"><span class="english">🚚 We arrive & tag</span><span class="hindi">हम आते हैं और टैग करते हैं</span></h4>
+            <p style="font-size: 12px; color: var(--warm-gray); margin: 0;"><span class="english">Our verified staff arrives at your door. Every bag is tagged and photographed.</span><span class="hindi">हमारी टीम आपके दरवाजे पर पहुंचती है।</span></p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; position: relative;">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(244,145,58,0.2); display: flex; align-items: center; justify-content: center; color: var(--saffron); font-weight: 500; flex-shrink: 0; z-index: 2; position: relative;">3</div>
+          <div style="flex: 1; padding-top: 4px;">
+            <h4 style="font-size: 14px; font-weight: 500; margin: 0 0 4px;"><span class="english">🌍 Real-time tracking</span><span class="hindi">रीयल-टाइम ट्रैकिंग</span></h4>
+            <p style="font-size: 12px; color: var(--warm-gray); margin: 0;"><span class="english">Get live WhatsApp updates and tracking link. Always know where your bags are.</span><span class="hindi">व्हाट्सएप अपडेट और ट्रैकिंग लिंक।</span></p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 20px; position: relative;">
+          <div style="width: 40px; height: 40px; border-radius: 50%; background: rgba(244,145,58,0.2); display: flex; align-items: center; justify-content: center; color: var(--saffron); font-weight: 500; flex-shrink: 0; z-index: 2; position: relative;">4</div>
+          <div style="flex: 1; padding-top: 4px;">
+            <h4 style="font-size: 14px; font-weight: 500; margin: 0 0 4px;"><span class="english">✅ Safe delivery</span><span class="hindi">सुरक्षित डिलीवरी</span></h4>
+            <p style="font-size: 12px; color: var(--warm-gray); margin: 0;"><span class="english">Your bags arrive on time. You sign off and relax. Job done!</span><span class="hindi">आपके बैग समय पर पहुंचते हैं।</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP BY STEP CARDS -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 1.5rem; color: var(--deep-brown);"><span class="english">How it works (step by step)</span><span class="hindi">यह कैसे काम करता है</span></h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px;">
+        <div style="background: rgba(244,145,58,0.1); border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 8px;">📱</div>
+          <div style="font-size: 12px; font-weight: 500; margin-bottom: 4px;"><span class="english">Step 1</span><span class="hindi">चरण 1</span></div>
+          <div style="font-size: 13px; color: var(--warm-gray);"><span class="english">Book your pickup</span><span class="hindi">पिकअप बुक करें</span></div>
+        </div>
+        
+        <div style="background: rgba(244,145,58,0.1); border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 8px;">🏠</div>
+          <div style="font-size: 12px; font-weight: 500; margin-bottom: 4px;"><span class="english">Step 2</span><span class="hindi">चरण 2</span></div>
+          <div style="font-size: 13px; color: var(--warm-gray);"><span class="english">We come to you</span><span class="hindi">हम आपके पास आते हैं</span></div>
+        </div>
+        
+        <div style="background: rgba(244,145,58,0.1); border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 8px;">📦</div>
+          <div style="font-size: 12px; font-weight: 500; margin-bottom: 4px;"><span class="english">Step 3</span><span class="hindi">चरण 3</span></div>
+          <div style="font-size: 13px; color: var(--warm-gray);"><span class="english">We tag & store</span><span class="hindi">हम टैग और स्टोर करते हैं</span></div>
+        </div>
+        
+        <div style="background: rgba(244,145,58,0.1); border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 8px;">🚛</div>
+          <div style="font-size: 12px; font-weight: 500; margin-bottom: 4px;"><span class="english">Step 4</span><span class="hindi">चरण 4</span></div>
+          <div style="font-size: 13px; color: var(--warm-gray);"><span class="english">Bags shipped</span><span class="hindi">बैग भेजे गए</span></div>
+        </div>
+        
+        <div style="background: rgba(244,145,58,0.1); border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 8px;">🌐</div>
+          <div style="font-size: 12px; font-weight: 500; margin-bottom: 4px;"><span class="english">Step 5</span><span class="hindi">चरण 5</span></div>
+          <div style="font-size: 13px; color: var(--warm-gray);"><span class="english">Live tracking</span><span class="hindi">लाइव ट्रैकिंग</span></div>
+        </div>
+        
+        <div style="background: rgba(244,145,58,0.1); border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 16px; text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 8px;">🎉</div>
+          <div style="font-size: 12px; font-weight: 500; margin-bottom: 4px;"><span class="english">Step 6</span><span class="hindi">चरण 6</span></div>
+          <div style="font-size: 13px; color: var(--warm-gray);"><span class="english">Delivered safely</span><span class="hindi">सुरक्षित डिलीवरी</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICE CARDS -->
+    <div style="margin-bottom: 3rem;">
+      <h2 style="font-size: 18px; font-weight: 500; margin: 0 0 1.5rem; color: var(--deep-brown);"><span class="english">Perfect for every traveller</span><span class="hindi">हर यात्री के लिए परिपूर्ण</span></h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <div style="border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 20px; background: var(--cream); cursor: pointer; transition: all 0.2s;">
+          <div style="font-size: 32px; margin-bottom: 10px;">👴👵</div>
+          <div style="font-weight: 500; font-size: 14px; margin-bottom: 8px;"><span class="english">Elderly travellers</span><span class="hindi">वरिष्ठ यात्री</span></div>
+          <div style="font-size: 12px; color: var(--warm-gray); line-height: 1.6; margin-bottom: 12px;"><span class="english">Safe, door-to-door service with extra care for every bag.</span><span class="hindi">सुरक्षित, दरवाजे से दरवाजे की सेवा।</span></div>
+          <div style="background: rgba(244,145,58,0.2); color: var(--saffron); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; display: inline-block;"><span class="english">From ₹199/bag</span><span class="hindi">₹199 से</span></div>
+        </div>
+        
+        <div style="border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 20px; background: var(--cream); cursor: pointer; transition: all 0.2s;">
+          <div style="font-size: 32px; margin-bottom: 10px;">💍🎊</div>
+          <div style="font-weight: 500; font-size: 14px; margin-bottom: 8px;"><span class="english">Wedding parties</span><span class="hindi">शादी की पार्टियां</span></div>
+          <div style="font-size: 12px; color: var(--warm-gray); line-height: 1.6; margin-bottom: 12px;"><span class="english">Handle 10+ bags venue-to-venue without stress.</span><span class="hindi">10+ बैग बिना तनाव के संभालें।</span></div>
+          <div style="background: rgba(74,124,89,0.2); color: var(--soft-green); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; display: inline-block;"><span class="english">From ₹99/bag</span><span class="hindi">₹99 से</span></div>
+        </div>
+        
+        <div style="border: 1px solid rgba(244,145,58,0.15); border-radius: 12px; padding: 20px; background: var(--cream); cursor: pointer; transition: all 0.2s;">
+          <div style="font-size: 32px; margin-bottom: 10px;">🎓✈️</div>
+          <div style="font-weight: 500; font-size: 14px; margin-bottom: 8px;"><span class="english">Students abroad</span><span class="hindi">विदेश में छात्र</span></div>
+          <div style="font-size: 12px; color: var(--warm-gray); line-height: 1.6; margin-bottom: 12px;"><span class="english">Skip airline excess fees and arrive light at the airport.</span><span class="hindi">एयरलाइन शुल्क बचाएं।</span></div>
+          <div style="background: rgba(244,145,58,0.2); color: var(--saffron); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; display: inline-block;"><span class="english">From ₹2,800</span><span class="hindi">₹2,800 से</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCRIPT FOR ANIMATIONS AND SLIDERS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Animated counters
+  const counters = [
+    { element: document.querySelector('.stat-counter'), target: 12400, suffix: '+' },
+    { element: document.querySelector('.stat-counter2'), target: 98.6, suffix: '%', decimals: 1 },
+    { element: document.querySelector('.stat-counter3'), target: 40, suffix: '+' }
+  ];
+
+  counters.forEach(counter => {
+    if (counter.element) {
+      let num = 0;
+      const duration = 2000;
+      const start = Date.now();
+      function animate() {
+        const elapsed = Date.now() - start;
+        const progress = Math.min(elapsed / duration, 1);
+        if (counter.decimals) {
+          num = (counter.target * progress).toFixed(counter.decimals);
+        } else {
+          num = Math.floor(counter.target * progress);
+        }
+        counter.element.textContent = num + counter.suffix;
+        if (progress < 1) requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  });
+
+  // Savings calculator
+  const bagsSlider = document.getElementById('bags-slider');
+  const bagsValue = document.getElementById('bags-value');
+  const destination = document.getElementById('destination');
+  const airlineCost = document.getElementById('airline-cost');
+  const betajiCost = document.getElementById('betaji-cost');
+  const savingsAmount = document.getElementById('savings-amount');
+
+  const pricingData = {
+    domestic: { airline: 4500, betaji: 340 },
+    usa: { airline: 18000, betaji: 3400 },
+    europe: { airline: 24000, betaji: 4200 },
+    asia: { airline: 12000, betaji: 2400 }
+  };
+
+  function updateSavings() {
+    const bags = parseInt(bagsSlider.value);
+    const dest = destination.value;
+    const pricing = pricingData[dest];
+    
+    const airline = pricing.airline * bags;
+    const betaji = pricing.betaji * bags;
+    const savings = airline - betaji;
+
+    bagsValue.textContent = bags + ' bags';
+    airlineCost.textContent = '₹' + airline.toLocaleString();
+    betajiCost.textContent = '₹' + betaji.toLocaleString();
+    savingsAmount.textContent = '₹' + savings.toLocaleString();
+  }
+
+  bagsSlider.addEventListener('input', updateSavings);
+  destination.addEventListener('change', updateSavings);
+  updateSavings();
+});
+</script>
+
 <section class="booking-section" id="book">
   <div style="text-align:center;margin-bottom:3rem;">
     <div class="section-label"><span class="english">Book now</span><span class="hindi">अभी बुक करें</span></div>
